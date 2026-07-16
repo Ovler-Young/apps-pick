@@ -47,5 +47,12 @@ describe("release proxy", () => {
     expect(
       getProxyTarget("/proxy/example/other/releases/download/v1.0.0/app.ipa"),
     ).toBeUndefined();
+    expect(
+      getProxyTarget(
+        "/proxy/kangyun1994/zhihu-plus-plus-swift/releases/download/v0.1.0/ZhihuPlusPlus-0.1.0-unsigned-final.ipa",
+      )?.toString(),
+    ).toBe(
+      "https://github.com/kangyun1994/zhihu-plus-plus-swift/releases/download/v0.1.0/ZhihuPlusPlus-0.1.0-unsigned-final.ipa",
+    );
   });
 });

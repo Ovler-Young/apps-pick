@@ -35,11 +35,13 @@ const BANGUMI_ICON =
   "https://raw.githubusercontent.com/czy0729/Bangumi/master/ios/Bangumi/Images.xcassets/AppIcon.appiconset/ItunesArtwork%402x.png";
 const OLIVER_ICON = "https://github.com/Ovler-Young.png";
 const QYSG_ICON = "https://github.com/autobcb.png";
+const ZHIHU_ICON = "https://github.com/kangyun1994.png";
 
 const ICONS: IconConfig[] = [
   { key: "bangumi", url: BANGUMI_ICON },
   { key: "oliver", url: OLIVER_ICON },
   { key: "qysg", url: QYSG_ICON },
+  { key: "zhihu-plus-plus-swift", url: ZHIHU_ICON },
 ];
 
 const APPS: AppConfig[] = [
@@ -69,6 +71,20 @@ const APPS: AppConfig[] = [
     category: "books",
     repo: "autobcb/qysg",
     minOSVersion: "15.0",
+  },
+  {
+    name: "Zhihu++ Swift",
+    bundleIdentifier: "com.kangyun1994.zhihu-plus-plus-swift",
+    developerName: "kangyun1994",
+    iconKey: "zhihu-plus-plus-swift",
+    subtitle: "原生 Swift/SwiftUI 知乎客户端",
+    localizedDescription:
+      "Zhihu++ 原生 Swift/SwiftUI iOS 客户端，基于 zly2006/zhihu-plus-plus，AGPL-3.0-only。",
+    iconURL: ZHIHU_ICON,
+    tintColor: "#3D79B6",
+    category: "social",
+    repo: "kangyun1994/zhihu-plus-plus-swift",
+    minOSVersion: "16.0",
   },
 ];
 

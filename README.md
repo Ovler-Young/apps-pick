@@ -6,6 +6,7 @@ Included sources:
 
 - [czy0729/Bangumi](https://github.com/czy0729/Bangumi)
 - [autobcb/qysg](https://github.com/autobcb/qysg)
+- [kangyun1994/zhihu-plus-plus-swift](https://github.com/kangyun1994/zhihu-plus-plus-swift)
 
 The Worker returns the latest five non-draft, non-prerelease IPA releases for each app. It uses the SHA-256 digest reported by GitHub Releases, or a matching `.ipa.sha256` asset when available.
 
