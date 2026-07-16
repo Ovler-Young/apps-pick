@@ -21,11 +21,11 @@ describe("release proxy", () => {
   });
 
   it("rewrites configured icons through the Worker", () => {
-    expect(createProxyIconURL("https://apps-pick.gcy.workers.dev", "bangumi")).toBe(
-      "https://apps-pick.gcy.workers.dev/proxy/icon/bangumi",
+    expect(createProxyIconURL("https://apps-pick.gcy.workers.dev", "oliver")).toBe(
+      "https://apps-pick.gcy.workers.dev/proxy/icon/oliver",
     );
-    expect(getProxyIconTarget("/proxy/icon/bangumi")?.toString()).toBe(
-      "https://raw.githubusercontent.com/czy0729/Bangumi/master/ios/Bangumi/Images.xcassets/AppIcon.appiconset/ItunesArtwork%402x.png",
+    expect(getProxyIconTarget("/proxy/icon/oliver")?.toString()).toBe(
+      "https://github.com/Ovler-Young.png",
     );
     expect(getProxyIconTarget("/proxy/icon/unknown")).toBeUndefined();
   });

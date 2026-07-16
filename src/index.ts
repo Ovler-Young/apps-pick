@@ -33,10 +33,12 @@ interface AppVersion {
 
 const BANGUMI_ICON =
   "https://raw.githubusercontent.com/czy0729/Bangumi/master/ios/Bangumi/Images.xcassets/AppIcon.appiconset/ItunesArtwork%402x.png";
+const OLIVER_ICON = "https://github.com/Ovler-Young.png";
 const QYSG_ICON = "https://github.com/autobcb.png";
 
 const ICONS: IconConfig[] = [
   { key: "bangumi", url: BANGUMI_ICON },
+  { key: "oliver", url: OLIVER_ICON },
   { key: "qysg", url: QYSG_ICON },
 ];
 
@@ -87,8 +89,8 @@ async function source(proxyOrigin?: string): Promise<Response> {
   try {
     const apps = await Promise.all(APPS.map((app) => toApp(app, proxyOrigin)));
     const sourceIconURL = proxyOrigin
-      ? createProxyIconURL(proxyOrigin, "bangumi")
-      : BANGUMI_ICON;
+      ? createProxyIconURL(proxyOrigin, "oliver")
+      : OLIVER_ICON;
 
     return json(
       {
