@@ -9,7 +9,7 @@ Included sources:
 
 The Worker returns the latest five non-draft, non-prerelease IPA releases for each app. It uses the SHA-256 digest reported by GitHub Releases, or a matching `.ipa.sha256` asset when available.
 
-Use `/proxy` as the AltStore Source URL to route the listed IPA downloads through the Worker. The proxy only accepts release assets from the repositories listed above.
+Use `/proxy` or `/proxy/` as the AltStore Source URL to route the listed IPA downloads through the Worker. The proxy only accepts release assets from the repositories listed above. Successful GitHub Releases API responses are cached by the Worker for 15 minutes.
 
 ## Deployment
 

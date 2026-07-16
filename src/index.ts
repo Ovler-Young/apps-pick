@@ -60,12 +60,9 @@ export default {
   async fetch(request: Request): Promise<Response> {
     const url = new URL(request.url);
 
-    if (url.pathname.startsWith("/proxy/")) {
-      return proxyDownload(request, url.pathname);
-    }
-
     if (url.pathname === "/") return source();
-    if (url.pathname === "/proxy") return source(url.origin);
+    if (isProxySourcePath(url.pathname)) return source(url.origin);
+    if (url.pathname.startsWith("/proxy/")) return proxyDownload(request, url.pathname);
 
     return json({ error: "Not found" }, 404, 0);
   },
@@ -143,6 +140,10 @@ export function createProxyURL(origin: string, githubDownloadURL: string): strin
   return `${origin}/proxy${downloadURL.pathname}`;
 }
 
+export function isProxySourcePath(pathname: string): boolean {
+  return pathname === "/proxy" || pathname === "/proxy/";
+}
+
 function proxyDownload(request: Request, pathname: string): Promise<Response> {
   const target = getProxyTarget(pathname);
   if (!target) return Promise.resolve(json({ error: "Not found" }, 404, 0));
@@ -201,7 +202,13 @@ function getDigest(digest: string | null | undefined): string | undefined {
 }
 
 async function fetchJSON<T>(url: string): Promise<T> {
-  const response = await fetch(url, {
+  const cache = caches.default;
+  const cacheKey = new Request(url);
+  const cached = await cache.match(cacheKey);
+
+  if (cached) return cached.json() as Promise<T>;
+
+  const response = await fetch(cacheKey, {
     headers: {
       Accept: "application/vnd.github+json",
       "User-Agent": "oliver-apps-pick-worker",
@@ -209,7 +216,17 @@ async function fetchJSON<T>(url: string): Promise<T> {
   });
 
   if (!response.ok) throw new Error(`GitHub API failed: ${response.status}`);
-  return response.json() as Promise<T>;
+
+  const headers = new Headers(response.headers);
+  headers.set("cache-control", "public, max-age=900");
+  const cacheable = new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+
+  await cache.put(cacheKey, cacheable.clone());
+  return cacheable.json() as Promise<T>;
 }
 
 async function fetchSHA256(url: string): Promise<string> {
