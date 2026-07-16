@@ -259,6 +259,10 @@ async function fetchJSON<T>(url: string): Promise<T> {
       Accept: "application/vnd.github+json",
       "User-Agent": "oliver-apps-pick-worker",
     },
+    cf: {
+      cacheEverything: true,
+      cacheTtl: 900,
+    },
   });
 
   if (!response.ok) throw new Error(`GitHub API failed: ${response.status}`);
