@@ -106,7 +106,7 @@ async function source(proxyOrigin?: string): Promise<Response> {
         news: [],
       },
       200,
-      900,
+      0,
     );
   } catch (error) {
     const message = error instanceof Error ? error.message : "Unknown error";
