@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
 
-import { createProxyURL, getProxyTarget, isProxySourcePath } from "../src/index";
+import {
+  createProxyIconURL,
+  createProxyURL,
+  getProxyIconTarget,
+  getProxyTarget,
+  isProxySourcePath,
+} from "../src/index";
 
 describe("release proxy", () => {
   it("rewrites GitHub download URLs through the Worker", () => {
@@ -12,6 +18,16 @@ describe("release proxy", () => {
     expect(proxyURL).toBe(
       "https://apps-pick.gcy.workers.dev/proxy/czy0729/Bangumi/releases/download/upstream-8.34.3/Bangumi-8.34.3-unsigned.ipa",
     );
+  });
+
+  it("rewrites configured icons through the Worker", () => {
+    expect(createProxyIconURL("https://apps-pick.gcy.workers.dev", "bangumi")).toBe(
+      "https://apps-pick.gcy.workers.dev/proxy/icon/bangumi",
+    );
+    expect(getProxyIconTarget("/proxy/icon/bangumi")?.toString()).toBe(
+      "https://raw.githubusercontent.com/czy0729/Bangumi/master/ios/Bangumi/Images.xcassets/AppIcon.appiconset/ItunesArtwork%402x.png",
+    );
+    expect(getProxyIconTarget("/proxy/icon/unknown")).toBeUndefined();
   });
 
   it("accepts the Source endpoint with or without a trailing slash", () => {

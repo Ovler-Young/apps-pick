@@ -4,6 +4,7 @@ interface AppConfig {
   bundleIdentifier: string;
   category: string;
   developerName: string;
+  iconKey: string;
   iconURL: string;
   localizedDescription: string;
   minOSVersion: string;
@@ -11,6 +12,11 @@ interface AppConfig {
   repo: string;
   subtitle: string;
   tintColor: string;
+}
+
+interface IconConfig {
+  key: string;
+  url: string;
 }
 
 interface AppVersion {
@@ -27,12 +33,19 @@ interface AppVersion {
 
 const BANGUMI_ICON =
   "https://raw.githubusercontent.com/czy0729/Bangumi/master/ios/Bangumi/Images.xcassets/AppIcon.appiconset/ItunesArtwork%402x.png";
+const QYSG_ICON = "https://github.com/autobcb.png";
+
+const ICONS: IconConfig[] = [
+  { key: "bangumi", url: BANGUMI_ICON },
+  { key: "qysg", url: QYSG_ICON },
+];
 
 const APPS: AppConfig[] = [
   {
     name: "Bangumi",
     bundleIdentifier: "tv.bangumi.czy0729",
     developerName: "czy0729",
+    iconKey: "bangumi",
     subtitle: "Bangumi 番组计划第三方客户端",
     localizedDescription:
       ":electron: An unofficial https://bgm.tv ui first app client for Android and iOS, built with React Native. 一个无广告、以爱好为驱动、不以盈利为目的、专门做 ACG 的类似豆瓣的追番记录，bgm.tv 第三方客户端。为移动端重新设计，内置大量加强的网页端难以实现的功能，且提供了相当的自定义选项。 目前已适配 iOS / Android。",
@@ -46,9 +59,10 @@ const APPS: AppConfig[] = [
     name: "轻悦时光",
     bundleIdentifier: "com.autobcb.qysg",
     developerName: "autobcb",
+    iconKey: "qysg",
     subtitle: "多平台阅读软件",
     localizedDescription: "轻悦时光发布仓库",
-    iconURL: "https://github.com/autobcb.png",
+    iconURL: QYSG_ICON,
     tintColor: "#4C9A8B",
     category: "books",
     repo: "autobcb/qysg",
@@ -62,6 +76,7 @@ export default {
 
     if (url.pathname === "/") return source();
     if (isProxySourcePath(url.pathname)) return source(url.origin);
+    if (url.pathname.startsWith("/proxy/icon/")) return proxyIcon(request, url.pathname);
     if (url.pathname.startsWith("/proxy/")) return proxyDownload(request, url.pathname);
 
     return json({ error: "Not found" }, 404, 0);
@@ -71,14 +86,17 @@ export default {
 async function source(proxyOrigin?: string): Promise<Response> {
   try {
     const apps = await Promise.all(APPS.map((app) => toApp(app, proxyOrigin)));
+    const sourceIconURL = proxyOrigin
+      ? createProxyIconURL(proxyOrigin, "bangumi")
+      : BANGUMI_ICON;
 
     return json(
       {
         name: "Oliver's Apps Pick",
         subtitle: "Curated unsigned IPA releases",
         description: "Oliver的Apps Pick",
-        iconURL: BANGUMI_ICON,
-        headerURL: BANGUMI_ICON,
+        iconURL: sourceIconURL,
+        headerURL: sourceIconURL,
         website: "https://github.com/Ovler-Young/apps-pick",
         tintColor: "#F09199",
         featuredApps: APPS.map((app) => app.bundleIdentifier),
@@ -101,7 +119,9 @@ async function toApp(app: AppConfig, proxyOrigin?: string) {
     developerName: app.developerName,
     subtitle: app.subtitle,
     localizedDescription: app.localizedDescription,
-    iconURL: app.iconURL,
+    iconURL: proxyOrigin
+      ? createProxyIconURL(proxyOrigin, app.iconKey)
+      : app.iconURL,
     tintColor: app.tintColor,
     category: app.category,
     versions: await getVersions(app, proxyOrigin),
@@ -140,6 +160,10 @@ export function createProxyURL(origin: string, githubDownloadURL: string): strin
   return `${origin}/proxy${downloadURL.pathname}`;
 }
 
+export function createProxyIconURL(origin: string, iconKey: string): string {
+  return `${origin}/proxy/icon/${iconKey}`;
+}
+
 export function isProxySourcePath(pathname: string): boolean {
   return pathname === "/proxy" || pathname === "/proxy/";
 }
@@ -152,7 +176,18 @@ function proxyDownload(request: Request, pathname: string): Promise<Response> {
     return Promise.resolve(json({ error: "Method not allowed" }, 405, 0));
   }
 
-  return fetchUpstreamDownload(request, target);
+  return fetchUpstream(request, target);
+}
+
+function proxyIcon(request: Request, pathname: string): Promise<Response> {
+  const target = getProxyIconTarget(pathname);
+  if (!target) return Promise.resolve(json({ error: "Not found" }, 404, 0));
+
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    return Promise.resolve(json({ error: "Method not allowed" }, 405, 0));
+  }
+
+  return fetchUpstream(request, target);
 }
 
 export function getProxyTarget(pathname: string): URL | undefined {
@@ -175,7 +210,18 @@ export function getProxyTarget(pathname: string): URL | undefined {
   return new URL(`https://github.com/${owner}/${repository}/releases/download/${tag}/${asset}`);
 }
 
-async function fetchUpstreamDownload(request: Request, target: URL): Promise<Response> {
+export function getProxyIconTarget(pathname: string): URL | undefined {
+  const segments = pathname.split("/").filter(Boolean);
+
+  if (segments.length !== 3 || segments[0] !== "proxy" || segments[1] !== "icon") {
+    return undefined;
+  }
+
+  const icon = ICONS.find((candidate) => candidate.key === segments[2]);
+  return icon ? new URL(icon.url) : undefined;
+}
+
+async function fetchUpstream(request: Request, target: URL): Promise<Response> {
   const headers = new Headers({ "User-Agent": "oliver-apps-pick-worker" });
   const range = request.headers.get("range");
 
