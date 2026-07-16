@@ -60,37 +60,44 @@ export default {
   async fetch(request: Request): Promise<Response> {
     const url = new URL(request.url);
 
-    if (url.pathname !== "/") {
-      return json({ error: "Not found" }, 404, 0);
+    if (url.pathname.startsWith("/proxy/")) {
+      return proxyDownload(request, url.pathname);
     }
 
-    try {
-      const apps = await Promise.all(APPS.map(toApp));
+    if (url.pathname === "/") return source();
+    if (url.pathname === "/proxy") return source(url.origin);
 
-      return json(
-        {
-          name: "Oliver's Apps Pick",
-          subtitle: "Curated unsigned IPA releases",
-          description: "Oliver的Apps Pick",
-          iconURL: BANGUMI_ICON,
-          headerURL: BANGUMI_ICON,
-          website: "https://github.com/Ovler-Young/apps-pick",
-          tintColor: "#F09199",
-          featuredApps: APPS.map((app) => app.bundleIdentifier),
-          apps,
-          news: [],
-        },
-        200,
-        900,
-      );
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error";
-      return json({ error: message }, 502, 0);
-    }
+    return json({ error: "Not found" }, 404, 0);
   },
 };
 
-async function toApp(app: AppConfig) {
+async function source(proxyOrigin?: string): Promise<Response> {
+  try {
+    const apps = await Promise.all(APPS.map((app) => toApp(app, proxyOrigin)));
+
+    return json(
+      {
+        name: "Oliver's Apps Pick",
+        subtitle: "Curated unsigned IPA releases",
+        description: "Oliver的Apps Pick",
+        iconURL: BANGUMI_ICON,
+        headerURL: BANGUMI_ICON,
+        website: "https://github.com/Ovler-Young/apps-pick",
+        tintColor: "#F09199",
+        featuredApps: APPS.map((app) => app.bundleIdentifier),
+        apps,
+        news: [],
+      },
+      200,
+      900,
+    );
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "Unknown error";
+    return json({ error: message }, 502, 0);
+  }
+}
+
+async function toApp(app: AppConfig, proxyOrigin?: string) {
   return {
     name: app.name,
     bundleIdentifier: app.bundleIdentifier,
@@ -100,11 +107,11 @@ async function toApp(app: AppConfig) {
     iconURL: app.iconURL,
     tintColor: app.tintColor,
     category: app.category,
-    versions: await getVersions(app),
+    versions: await getVersions(app, proxyOrigin),
   };
 }
 
-async function getVersions(app: AppConfig): Promise<AppVersion[]> {
+async function getVersions(app: AppConfig, proxyOrigin?: string): Promise<AppVersion[]> {
   const releases = await fetchJSON<GitHubRelease[]>(
     `https://api.github.com/repos/${app.repo}/releases?per_page=30`,
   );
@@ -121,12 +128,71 @@ async function getVersions(app: AppConfig): Promise<AppVersion[]> {
       marketingVersion: version,
       date: release.published_at,
       localizedDescription: `Release ${version} from ${app.repo}.`,
-      downloadURL: ipa.browser_download_url,
+      downloadURL: proxyOrigin
+        ? createProxyURL(proxyOrigin, ipa.browser_download_url)
+        : ipa.browser_download_url,
       size: ipa.size,
       sha256: getDigest(ipa.digest) ?? (shaFile ? await fetchSHA256(shaFile.browser_download_url) : undefined),
       minOSVersion: app.minOSVersion,
     })),
   );
+}
+
+export function createProxyURL(origin: string, githubDownloadURL: string): string {
+  const downloadURL = new URL(githubDownloadURL);
+  return `${origin}/proxy${downloadURL.pathname}`;
+}
+
+function proxyDownload(request: Request, pathname: string): Promise<Response> {
+  const target = getProxyTarget(pathname);
+  if (!target) return Promise.resolve(json({ error: "Not found" }, 404, 0));
+
+  if (request.method !== "GET" && request.method !== "HEAD") {
+    return Promise.resolve(json({ error: "Method not allowed" }, 405, 0));
+  }
+
+  return fetchUpstreamDownload(request, target);
+}
+
+export function getProxyTarget(pathname: string): URL | undefined {
+  const segments = pathname.split("/").filter(Boolean);
+
+  if (segments.length !== 7) return undefined;
+
+  const [proxy, owner, repository, releases, download, tag, asset] = segments;
+  const repo = `${owner}/${repository}`;
+
+  if (
+    proxy !== "proxy" ||
+    releases !== "releases" ||
+    download !== "download" ||
+    !APPS.some((app) => app.repo === repo)
+  ) {
+    return undefined;
+  }
+
+  return new URL(`https://github.com/${owner}/${repository}/releases/download/${tag}/${asset}`);
+}
+
+async function fetchUpstreamDownload(request: Request, target: URL): Promise<Response> {
+  const headers = new Headers({ "User-Agent": "oliver-apps-pick-worker" });
+  const range = request.headers.get("range");
+
+  if (range) headers.set("range", range);
+
+  const upstream = await fetch(target, {
+    method: request.method,
+    headers,
+    redirect: "follow",
+  });
+  const responseHeaders = new Headers(upstream.headers);
+  responseHeaders.set("access-control-allow-origin", "*");
+
+  return new Response(upstream.body, {
+    status: upstream.status,
+    statusText: upstream.statusText,
+    headers: responseHeaders,
+  });
 }
 
 function getDigest(digest: string | null | undefined): string | undefined {
