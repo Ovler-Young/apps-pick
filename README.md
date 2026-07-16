@@ -11,7 +11,7 @@ The Worker returns the latest five non-draft, non-prerelease IPA releases for ea
 
 ## Deployment
 
-The `main` branch workflow runs tests, type-checking, and `wrangler deploy`. Configure these GitHub Actions secrets before the first deployment:
+The `main` branch workflow runs tests and type-checking. It runs `wrangler deploy` when both of these GitHub Actions secrets are configured:
 
 - `CLOUDFLARE_ACCOUNT_ID`
 - `CLOUDFLARE_API_TOKEN` with Cloudflare Workers edit permission for that account
