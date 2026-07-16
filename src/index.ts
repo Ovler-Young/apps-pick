@@ -34,7 +34,8 @@ const APPS: AppConfig[] = [
     bundleIdentifier: "tv.bangumi.czy0729",
     developerName: "czy0729",
     subtitle: "Bangumi 番组计划第三方客户端",
-    localizedDescription: "IPA 来自 GitHub Actions 自动构建，未签名，需由侧载工具签名安装。",
+    localizedDescription:
+      ":electron: An unofficial https://bgm.tv ui first app client for Android and iOS, built with React Native. 一个无广告、以爱好为驱动、不以盈利为目的、专门做 ACG 的类似豆瓣的追番记录，bgm.tv 第三方客户端。为移动端重新设计，内置大量加强的网页端难以实现的功能，且提供了相当的自定义选项。 目前已适配 iOS / Android。",
     iconURL: BANGUMI_ICON,
     tintColor: "#F09199",
     category: "entertainment",
@@ -46,7 +47,7 @@ const APPS: AppConfig[] = [
     bundleIdentifier: "com.autobcb.qysg",
     developerName: "autobcb",
     subtitle: "多平台阅读软件",
-    localizedDescription: "IPA 来自 qysg GitHub Releases，需由侧载工具签名安装。",
+    localizedDescription: "轻悦时光发布仓库",
     iconURL: "https://github.com/autobcb.png",
     tintColor: "#4C9A8B",
     category: "books",
@@ -70,7 +71,7 @@ export default {
         {
           name: "Oliver's Apps Pick",
           subtitle: "Curated unsigned IPA releases",
-          description: "Oliver的Apps Pick，收录不局限于目前的 Bangumi。",
+          description: "Oliver的Apps Pick",
           iconURL: BANGUMI_ICON,
           headerURL: BANGUMI_ICON,
           website: "https://github.com/Ovler-Young/apps-pick",
