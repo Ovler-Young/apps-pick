@@ -36,6 +36,8 @@ const BANGUMI_ICON =
 const FLUXDO_ICON =
   "https://raw.githubusercontent.com/Lingyan000/fluxdo/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-Light-1024x1024.png";
 const JOYCOMIC_ICON = "https://raw.githubusercontent.com/xiaoqi419/JoyComic/main/assets/app.jpg";
+const MELOX_ICON =
+  "https://raw.githubusercontent.com/youshen2/MeloX/main/MeloX/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png";
 const OLIVER_ICON = "https://github.com/Ovler-Young.png";
 const QYSG_ICON = "https://github.com/autobcb.png";
 const ZHIHU_ICON = "https://github.com/kangyun1994.png";
@@ -44,6 +46,7 @@ const ICONS: IconConfig[] = [
   { key: "bangumi", url: BANGUMI_ICON },
   { key: "fluxdo", url: FLUXDO_ICON },
   { key: "joycomic", url: JOYCOMIC_ICON },
+  { key: "melox", url: MELOX_ICON },
   { key: "oliver", url: OLIVER_ICON },
   { key: "qysg", url: QYSG_ICON },
   { key: "zhihu-plus-plus-swift", url: ZHIHU_ICON },
@@ -89,6 +92,20 @@ const APPS: AppConfig[] = [
     category: "books",
     repo: "xiaoqi419/JoyComic",
     minOSVersion: "13.0",
+  },
+  {
+    name: "MeloX",
+    bundleIdentifier: "moye.MeloX",
+    developerName: "youshen2",
+    iconKey: "melox",
+    subtitle: "第三方网易云音乐播放器",
+    localizedDescription:
+      "专为 iOS 原生开发的第三方网易云客户端，使用 SwiftUI 并使用液体玻璃设计规范，参考 Apple Music 的 UI 并提供特色功能。",
+    iconURL: MELOX_ICON,
+    tintColor: "#F0202A",
+    category: "music",
+    repo: "youshen2/MeloX",
+    minOSVersion: "26.0",
   },
   {
     name: "轻悦时光",

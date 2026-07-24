@@ -7,6 +7,7 @@ Included sources:
 - [czy0729/Bangumi](https://github.com/czy0729/Bangumi)
 - [Lingyan000/fluxdo](https://github.com/Lingyan000/fluxdo)
 - [xiaoqi419/JoyComic](https://github.com/xiaoqi419/JoyComic)
+- [youshen2/MeloX](https://github.com/youshen2/MeloX)
 - [autobcb/qysg](https://github.com/autobcb/qysg)
 - [kangyun1994/zhihu-plus-plus-swift](https://github.com/kangyun1994/zhihu-plus-plus-swift)
 

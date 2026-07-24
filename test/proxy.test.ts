@@ -33,6 +33,9 @@ describe("release proxy", () => {
     expect(getProxyIconTarget("/proxy/icon/oliver")?.toString()).toBe(
       "https://github.com/Ovler-Young.png",
     );
+    expect(getProxyIconTarget("/proxy/icon/melox")?.toString()).toBe(
+      "https://raw.githubusercontent.com/youshen2/MeloX/main/MeloX/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png",
+    );
     expect(getProxyIconTarget("/proxy/icon/unknown")).toBeUndefined();
   });
 
@@ -79,6 +82,20 @@ describe("release proxy", () => {
       "https://github.com/czy0729/Bangumi/releases/download/upstream-8.34.3/Bangumi-8.34.3-unsigned.ipa",
     );
     expect(
+      getProxyTarget(
+        "/proxy/youshen2/MeloX/releases/download/v0.4.0/MeloX-iOS-unsigned.ipa",
+      )?.toString(),
+    ).toBe(
+      "https://github.com/youshen2/MeloX/releases/download/v0.4.0/MeloX-iOS-unsigned.ipa",
+    );
+    expect(
+      getProxyTarget(
+        "/proxy/youshen2/MeloX/releases/download/v0.4.0/MeloX-iOS-unsigned.ipa.sha256",
+      )?.toString(),
+    ).toBe(
+      "https://github.com/youshen2/MeloX/releases/download/v0.4.0/MeloX-iOS-unsigned.ipa.sha256",
+    );
+    expect(
       getProxyTarget("/proxy/example/other/releases/download/v1.0.0/app.ipa"),
     ).toBeUndefined();
     expect(
@@ -89,6 +106,11 @@ describe("release proxy", () => {
     expect(
       getProxyTarget(
         "/proxy/Lingyan000/unknown/releases/download/v0.2.24/fluxdo-unsigned.ipa",
+      ),
+    ).toBeUndefined();
+    expect(
+      getProxyTarget(
+        "/proxy/youshen2/unknown/releases/download/v0.4.0/MeloX-iOS-unsigned.ipa",
       ),
     ).toBeUndefined();
     expect(
