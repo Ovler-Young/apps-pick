@@ -33,12 +33,17 @@ interface AppVersion {
 
 const BANGUMI_ICON =
   "https://raw.githubusercontent.com/czy0729/Bangumi/master/ios/Bangumi/Images.xcassets/AppIcon.appiconset/ItunesArtwork%402x.png";
+const FLUXDO_ICON =
+  "https://raw.githubusercontent.com/Lingyan000/fluxdo/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-Light-1024x1024.png";
+const JOYCOMIC_ICON = "https://raw.githubusercontent.com/xiaoqi419/JoyComic/main/assets/app.jpg";
 const OLIVER_ICON = "https://github.com/Ovler-Young.png";
 const QYSG_ICON = "https://github.com/autobcb.png";
 const ZHIHU_ICON = "https://github.com/kangyun1994.png";
 
 const ICONS: IconConfig[] = [
   { key: "bangumi", url: BANGUMI_ICON },
+  { key: "fluxdo", url: FLUXDO_ICON },
+  { key: "joycomic", url: JOYCOMIC_ICON },
   { key: "oliver", url: OLIVER_ICON },
   { key: "qysg", url: QYSG_ICON },
   { key: "zhihu-plus-plus-swift", url: ZHIHU_ICON },
@@ -58,6 +63,32 @@ const APPS: AppConfig[] = [
     category: "entertainment",
     repo: "czy0729/Bangumi",
     minOSVersion: "15.1",
+  },
+  {
+    name: "FluxDO",
+    bundleIdentifier: "com.github.lingyan000.fluxdo",
+    developerName: "Lingyan000",
+    iconKey: "fluxdo",
+    subtitle: "一个 Linux.do 第三方客户端",
+    localizedDescription: "一个 Linux.do 第三方客户端",
+    iconURL: FLUXDO_ICON,
+    tintColor: "#FFB30C",
+    category: "social",
+    repo: "Lingyan000/fluxdo",
+    minOSVersion: "14.0",
+  },
+  {
+    name: "JoyComic",
+    bundleIdentifier: "com.example.joycomic",
+    developerName: "xiaoqi419",
+    iconKey: "joycomic",
+    subtitle: "聚合哔咔与禁漫双源的 iOS 漫画阅读器",
+    localizedDescription: "",
+    iconURL: JOYCOMIC_ICON,
+    tintColor: "#F33686",
+    category: "books",
+    repo: "xiaoqi419/JoyComic",
+    minOSVersion: "13.0",
   },
   {
     name: "轻悦时光",
@@ -220,7 +251,8 @@ export function getProxyTarget(pathname: string): URL | undefined {
     proxy !== "proxy" ||
     releases !== "releases" ||
     download !== "download" ||
-    !APPS.some((app) => app.repo === repo)
+    !APPS.some((app) => app.repo === repo) ||
+    !/\.ipa(?:\.sha256)?$/i.test(asset)
   ) {
     return undefined;
   }
