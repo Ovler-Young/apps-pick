@@ -30,6 +30,12 @@ describe("release proxy", () => {
     expect(getProxyIconTarget("/proxy/icon/fluxdo")?.toString()).toBe(
       "https://raw.githubusercontent.com/Lingyan000/fluxdo/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-Light-1024x1024.png",
     );
+    expect(getProxyIconTarget("/proxy/icon/han1me-plus")?.toString()).toBe(
+      "https://raw.githubusercontent.com/1wc10086/Han1mePlus/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024%401x.png",
+    );
+    expect(getProxyIconTarget("/proxy/icon/hana")?.toString()).toBe(
+      "https://raw.githubusercontent.com/celia-sh/Hana/main/Hana/AppIcon.icon/Assets/hana.png",
+    );
     expect(getProxyIconTarget("/proxy/icon/loveiwara")?.toString()).toBe(
       "https://raw.githubusercontent.com/FoxSensei001/LoveIwara/master/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024%401x.png",
     );
@@ -38,6 +44,12 @@ describe("release proxy", () => {
     );
     expect(getProxyIconTarget("/proxy/icon/melox")?.toString()).toBe(
       "https://raw.githubusercontent.com/youshen2/MeloX/main/MeloX/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png",
+    );
+    expect(getProxyIconTarget("/proxy/icon/novella")?.toString()).toBe(
+      "https://raw.githubusercontent.com/celia-sh/Novella/main/apps/mobile/assets/Novella.icon/Assets/Novella.png",
+    );
+    expect(getProxyIconTarget("/proxy/icon/oneanime")?.toString()).toBe(
+      "https://raw.githubusercontent.com/Predidit/oneAnime/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024%401x.png",
     );
     expect(getProxyIconTarget("/proxy/icon/picacomic")?.toString()).toBe(
       "https://raw.githubusercontent.com/ccbkv/PicaComic/4.8.8/ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon~ios-marketing.png",
@@ -114,6 +126,34 @@ describe("release proxy", () => {
       )?.toString(),
     ).toBe(
       "https://github.com/FoxSensei001/LoveIwara/releases/download/0.5.1/i_iwara-0.5.1-ios.ipa",
+    );
+    expect(
+      getProxyTarget(
+        "/proxy/1wc10086/Han1mePlus/releases/download/v1.1.7/iphone.arm64.ipa",
+      )?.toString(),
+    ).toBe(
+      "https://github.com/1wc10086/Han1mePlus/releases/download/v1.1.7/iphone.arm64.ipa",
+    );
+    expect(
+      getProxyTarget(
+        "/proxy/celia-sh/Novella/releases/download/v2.3.0/Novella-2.3.0-release.ipa",
+      )?.toString(),
+    ).toBe(
+      "https://github.com/celia-sh/Novella/releases/download/v2.3.0/Novella-2.3.0-release.ipa",
+    );
+    expect(
+      getProxyTarget(
+        "/proxy/celia-sh/Hana/releases/download/v1.1.0/Hana-iOS-1.1.0-45-unsigned.ipa",
+      )?.toString(),
+    ).toBe(
+      "https://github.com/celia-sh/Hana/releases/download/v1.1.0/Hana-iOS-1.1.0-45-unsigned.ipa",
+    );
+    expect(
+      getProxyTarget(
+        "/proxy/Predidit/oneAnime/releases/download/1.4.7/oneAnime_ios_1.4.7_no_sign.ipa",
+      )?.toString(),
+    ).toBe(
+      "https://github.com/Predidit/oneAnime/releases/download/1.4.7/oneAnime_ios_1.4.7_no_sign.ipa",
     );
     expect(
       getProxyTarget("/proxy/example/other/releases/download/v1.0.0/app.ipa"),

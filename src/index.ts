@@ -35,12 +35,19 @@ const BANGUMI_ICON =
   "https://raw.githubusercontent.com/czy0729/Bangumi/master/ios/Bangumi/Images.xcassets/AppIcon.appiconset/ItunesArtwork%402x.png";
 const FLUXDO_ICON =
   "https://raw.githubusercontent.com/Lingyan000/fluxdo/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-Light-1024x1024.png";
+const HAN1ME_PLUS_ICON =
+  "https://raw.githubusercontent.com/1wc10086/Han1mePlus/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024%401x.png";
+const HANA_ICON = "https://raw.githubusercontent.com/celia-sh/Hana/main/Hana/AppIcon.icon/Assets/hana.png";
 const JOYCOMIC_ICON = "https://raw.githubusercontent.com/xiaoqi419/JoyComic/main/assets/app.jpg";
 const LOVEIWARA_ICON =
   "https://raw.githubusercontent.com/FoxSensei001/LoveIwara/master/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024%401x.png";
 const MELOX_ICON =
   "https://raw.githubusercontent.com/youshen2/MeloX/main/MeloX/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png";
+const NOVELLA_ICON =
+  "https://raw.githubusercontent.com/celia-sh/Novella/main/apps/mobile/assets/Novella.icon/Assets/Novella.png";
 const OLIVER_ICON = "https://github.com/Ovler-Young.png";
+const ONEANIME_ICON =
+  "https://raw.githubusercontent.com/Predidit/oneAnime/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024%401x.png";
 const PICACOMIC_ICON =
   "https://raw.githubusercontent.com/ccbkv/PicaComic/4.8.8/ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon~ios-marketing.png";
 const QYSG_ICON = "https://github.com/autobcb.png";
@@ -49,10 +56,14 @@ const ZHIHU_ICON = "https://github.com/kangyun1994.png";
 const ICONS: IconConfig[] = [
   { key: "bangumi", url: BANGUMI_ICON },
   { key: "fluxdo", url: FLUXDO_ICON },
+  { key: "han1me-plus", url: HAN1ME_PLUS_ICON },
+  { key: "hana", url: HANA_ICON },
   { key: "joycomic", url: JOYCOMIC_ICON },
   { key: "loveiwara", url: LOVEIWARA_ICON },
   { key: "melox", url: MELOX_ICON },
+  { key: "novella", url: NOVELLA_ICON },
   { key: "oliver", url: OLIVER_ICON },
+  { key: "oneanime", url: ONEANIME_ICON },
   { key: "picacomic", url: PICACOMIC_ICON },
   { key: "qysg", url: QYSG_ICON },
   { key: "zhihu-plus-plus-swift", url: ZHIHU_ICON },
@@ -85,6 +96,33 @@ const APPS: AppConfig[] = [
     category: "social",
     repo: "Lingyan000/fluxdo",
     minOSVersion: "14.0",
+  },
+  {
+    name: "Han1me+",
+    bundleIdentifier: "com.liar.han1mePlus",
+    developerName: "1wc10086",
+    iconKey: "han1me-plus",
+    subtitle: "跨平台 Hanime1 第三方客户端",
+    localizedDescription:
+      "​一款基于 Flutter & Dart 构建的跨平台 Hanime1 第三方客户端，支持 Android、iOS、macOS 及 Windows。",
+    iconURL: HAN1ME_PLUS_ICON,
+    tintColor: "#D75078",
+    category: "entertainment",
+    repo: "1wc10086/Han1mePlus",
+    minOSVersion: "13.0",
+  },
+  {
+    name: "Hana",
+    bundleIdentifier: "sh.celia.hana",
+    developerName: "celia-sh",
+    iconKey: "hana",
+    subtitle: "Hanime1 第三方客户端",
+    localizedDescription: "Hanime1 第三方客户端",
+    iconURL: HANA_ICON,
+    tintColor: "#D76354",
+    category: "entertainment",
+    repo: "celia-sh/Hana",
+    minOSVersion: "26.0",
   },
   {
     name: "JoyComic",
@@ -125,6 +163,33 @@ const APPS: AppConfig[] = [
     category: "music",
     repo: "youshen2/MeloX",
     minOSVersion: "26.0",
+  },
+  {
+    name: "Novella",
+    bundleIdentifier: "sh.celia.novella",
+    developerName: "celia-sh",
+    iconKey: "novella",
+    subtitle: "轻书架第三方客户端",
+    localizedDescription: "轻书架第三方客户端",
+    iconURL: NOVELLA_ICON,
+    tintColor: "#6E8BB7",
+    category: "books",
+    repo: "celia-sh/Novella",
+    minOSVersion: "16.4",
+  },
+  {
+    name: "Oneanime",
+    bundleIdentifier: "com.example.oneanime",
+    developerName: "Predidit",
+    iconKey: "oneanime",
+    subtitle: "支持弹幕的 Anime1 第三方客户端",
+    localizedDescription:
+      "一款简洁清爽无广告的看番软件。 一款带弹幕的 anime1 第三方客户端，界面符合 Material You 规范。",
+    iconURL: ONEANIME_ICON,
+    tintColor: "#3A9BD8",
+    category: "entertainment",
+    repo: "Predidit/oneAnime",
+    minOSVersion: "12.0",
   },
   {
     name: "Pica Comic",

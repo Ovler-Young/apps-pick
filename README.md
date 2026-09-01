@@ -6,9 +6,13 @@ Included sources:
 
 - [czy0729/Bangumi](https://github.com/czy0729/Bangumi)
 - [Lingyan000/fluxdo](https://github.com/Lingyan000/fluxdo)
+- [1wc10086/Han1mePlus](https://github.com/1wc10086/Han1mePlus)
+- [celia-sh/Hana](https://github.com/celia-sh/Hana)
 - [xiaoqi419/JoyComic](https://github.com/xiaoqi419/JoyComic)
 - [FoxSensei001/LoveIwara](https://github.com/FoxSensei001/LoveIwara)
 - [youshen2/MeloX](https://github.com/youshen2/MeloX)
+- [celia-sh/Novella](https://github.com/celia-sh/Novella)
+- [Predidit/oneAnime](https://github.com/Predidit/oneAnime)
 - [ccbkv/PicaComic](https://github.com/ccbkv/PicaComic)
 - [autobcb/qysg](https://github.com/autobcb/qysg)
 - [kangyun1994/zhihu-plus-plus-swift](https://github.com/kangyun1994/zhihu-plus-plus-swift)
