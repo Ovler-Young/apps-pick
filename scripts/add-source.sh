@@ -17,6 +17,26 @@ die() {
   exit 1
 }
 
+validate_candidate_field() {
+  field_name=$1
+  field_value=$2
+
+  if ! python3 - "$field_value" <<'PY'
+import sys
+import unicodedata
+
+value = sys.argv[1]
+if any(
+    unicodedata.category(character) == "Cc" or character in "\u2028\u2029"
+    for character in value
+):
+    raise SystemExit(1)
+PY
+  then
+    die "$field_name must not contain control characters or Unicode line separators"
+  fi
+}
+
 for command in gh mktemp python3 unzip; do
   command -v "$command" >/dev/null 2>&1 || die "Required command not found: $command"
 done
@@ -28,6 +48,12 @@ icon_url=$2
 category=$3
 tint_color=$4
 subtitle=${5:-}
+
+validate_candidate_field "Repository" "$repo"
+validate_candidate_field "Icon URL" "$icon_url"
+validate_candidate_field "Category" "$category"
+validate_candidate_field "Tint color" "$tint_color"
+validate_candidate_field "Subtitle" "$subtitle"
 
 case "$repo" in
   */*/* | /* | */ | *" "*) die "Repository must be in OWNER/REPO form" ;;
