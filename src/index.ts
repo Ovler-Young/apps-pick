@@ -31,6 +31,10 @@ interface AppVersion {
   version: string;
 }
 
+interface Env {
+  GITHUB_TOKEN?: string;
+}
+
 const BANGUMI_ICON =
   "https://raw.githubusercontent.com/czy0729/Bangumi/master/ios/Bangumi/Images.xcassets/AppIcon.appiconset/ItunesArtwork%402x.png";
 const FLUXDO_ICON =
@@ -234,11 +238,11 @@ const APPS: AppConfig[] = [
 ];
 
 export default {
-  async fetch(request: Request): Promise<Response> {
+  async fetch(request: Request, env: Env): Promise<Response> {
     const url = new URL(request.url);
 
-    if (url.pathname === "/") return source();
-    if (isProxySourcePath(url.pathname)) return source(url.origin);
+    if (url.pathname === "/") return source(undefined, env.GITHUB_TOKEN);
+    if (isProxySourcePath(url.pathname)) return source(url.origin, env.GITHUB_TOKEN);
     if (url.pathname.startsWith("/proxy/icon/")) return proxyIcon(request, url.pathname);
     if (url.pathname.startsWith("/proxy/")) return proxyDownload(request, url.pathname);
 
@@ -246,9 +250,18 @@ export default {
   },
 };
 
-async function source(proxyOrigin?: string): Promise<Response> {
+async function source(proxyOrigin?: string, githubToken?: string): Promise<Response> {
   try {
-    const apps = await Promise.all(APPS.map((app) => toApp(app, proxyOrigin)));
+    const appResults = await Promise.allSettled(
+      APPS.map((app) => toApp(app, proxyOrigin, githubToken)),
+    );
+    const apps = appResults.flatMap((result) => (result.status === "fulfilled" ? [result.value] : []));
+
+    if (apps.length === 0) {
+      const failure = appResults.find((result) => result.status === "rejected");
+      throw failure?.reason ?? new Error("No configured app sources could be loaded");
+    }
+
     const sourceIconURL = proxyOrigin
       ? createProxyIconURL(proxyOrigin, "oliver")
       : OLIVER_ICON;
@@ -262,7 +275,7 @@ async function source(proxyOrigin?: string): Promise<Response> {
         headerURL: sourceIconURL,
         website: "https://github.com/Ovler-Young/apps-pick",
         tintColor: "#F09199",
-        featuredApps: APPS.map((app) => app.bundleIdentifier),
+        featuredApps: apps.map((app) => app.bundleIdentifier),
         apps,
         news: [],
       },
@@ -275,7 +288,7 @@ async function source(proxyOrigin?: string): Promise<Response> {
   }
 }
 
-async function toApp(app: AppConfig, proxyOrigin?: string) {
+async function toApp(app: AppConfig, proxyOrigin?: string, githubToken?: string) {
   return {
     name: app.name,
     bundleIdentifier: app.bundleIdentifier,
@@ -287,13 +300,18 @@ async function toApp(app: AppConfig, proxyOrigin?: string) {
       : app.iconURL,
     tintColor: app.tintColor,
     category: app.category,
-    versions: await getVersions(app, proxyOrigin),
+    versions: await getVersions(app, proxyOrigin, githubToken),
   };
 }
 
-async function getVersions(app: AppConfig, proxyOrigin?: string): Promise<AppVersion[]> {
+async function getVersions(
+  app: AppConfig,
+  proxyOrigin?: string,
+  githubToken?: string,
+): Promise<AppVersion[]> {
   const releases = await fetchJSON<GitHubRelease[]>(
     `https://api.github.com/repos/${app.repo}/releases?per_page=30`,
+    githubToken,
   );
   const ipaReleases = findIpaReleases(releases);
 
@@ -411,18 +429,22 @@ function getDigest(digest: string | null | undefined): string | undefined {
   return hash?.toLowerCase();
 }
 
-async function fetchJSON<T>(url: string): Promise<T> {
+async function fetchJSON<T>(url: string, githubToken?: string): Promise<T> {
   const cache = caches.default;
   const cacheKey = new Request(url);
   const cached = await cache.match(cacheKey);
 
   if (cached) return cached.json() as Promise<T>;
 
+  const requestHeaders = new Headers({
+    Accept: "application/vnd.github+json",
+    "User-Agent": "oliver-apps-pick-worker",
+  });
+
+  if (githubToken) requestHeaders.set("Authorization", `Bearer ${githubToken}`);
+
   const response = await fetch(cacheKey, {
-    headers: {
-      Accept: "application/vnd.github+json",
-      "User-Agent": "oliver-apps-pick-worker",
-    },
+    headers: requestHeaders,
     cf: {
       cacheEverything: true,
       cacheTtl: 900,

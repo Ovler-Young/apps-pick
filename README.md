@@ -21,6 +21,14 @@ The Worker returns the latest five non-draft, non-prerelease IPA releases for ea
 
 Use `/proxy` or `/proxy/` as the AltStore Source URL to route the listed IPA downloads and icons through the Worker. The proxy only accepts configured release assets whose filenames end in `.ipa` or `.ipa.sha256`; it rejects other asset types and arbitrary `.sha256` files. Icon URLs must also be configured. Successful GitHub Releases API responses are cached by the Worker for 15 minutes.
 
+To avoid GitHub's unauthenticated API quota, optionally store a GitHub token in the Worker:
+
+```sh
+pnpm exec wrangler secret put GITHUB_TOKEN
+```
+
+The token is used only for GitHub Releases API requests and is not returned by the Source.
+
 ## Adding a source
 
 The helper requires an authenticated [`gh`](https://cli.github.com/) client, `unzip`, and Python 3. Supply the curated repository, icon URL, AltStore category, tint color, and an optional subtitle:
