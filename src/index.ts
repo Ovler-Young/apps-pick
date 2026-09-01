@@ -36,6 +36,8 @@ const BANGUMI_ICON =
 const FLUXDO_ICON =
   "https://raw.githubusercontent.com/Lingyan000/fluxdo/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-Light-1024x1024.png";
 const JOYCOMIC_ICON = "https://raw.githubusercontent.com/xiaoqi419/JoyComic/main/assets/app.jpg";
+const LOVEIWARA_ICON =
+  "https://raw.githubusercontent.com/FoxSensei001/LoveIwara/master/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024%401x.png";
 const MELOX_ICON =
   "https://raw.githubusercontent.com/youshen2/MeloX/main/MeloX/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png";
 const OLIVER_ICON = "https://github.com/Ovler-Young.png";
@@ -48,6 +50,7 @@ const ICONS: IconConfig[] = [
   { key: "bangumi", url: BANGUMI_ICON },
   { key: "fluxdo", url: FLUXDO_ICON },
   { key: "joycomic", url: JOYCOMIC_ICON },
+  { key: "loveiwara", url: LOVEIWARA_ICON },
   { key: "melox", url: MELOX_ICON },
   { key: "oliver", url: OLIVER_ICON },
   { key: "picacomic", url: PICACOMIC_ICON },
@@ -95,6 +98,19 @@ const APPS: AppConfig[] = [
     category: "books",
     repo: "xiaoqi419/JoyComic",
     minOSVersion: "13.0",
+  },
+  {
+    name: "Love Iwara",
+    bundleIdentifier: "m.c.g.a.i-iwara",
+    developerName: "FoxSensei001",
+    iconKey: "loveiwara",
+    subtitle: "unofficial Flutter Iwara client supporting iOS and other platforms",
+    localizedDescription: "unofficial Flutter Iwara client supporting iOS and other platforms",
+    iconURL: LOVEIWARA_ICON,
+    tintColor: "#F89032",
+    category: "entertainment",
+    repo: "FoxSensei001/LoveIwara",
+    minOSVersion: "15.0",
   },
   {
     name: "MeloX",

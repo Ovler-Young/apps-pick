@@ -7,6 +7,7 @@ Included sources:
 - [czy0729/Bangumi](https://github.com/czy0729/Bangumi)
 - [Lingyan000/fluxdo](https://github.com/Lingyan000/fluxdo)
 - [xiaoqi419/JoyComic](https://github.com/xiaoqi419/JoyComic)
+- [FoxSensei001/LoveIwara](https://github.com/FoxSensei001/LoveIwara)
 - [youshen2/MeloX](https://github.com/youshen2/MeloX)
 - [ccbkv/PicaComic](https://github.com/ccbkv/PicaComic)
 - [autobcb/qysg](https://github.com/autobcb/qysg)

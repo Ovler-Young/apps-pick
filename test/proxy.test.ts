@@ -30,6 +30,9 @@ describe("release proxy", () => {
     expect(getProxyIconTarget("/proxy/icon/fluxdo")?.toString()).toBe(
       "https://raw.githubusercontent.com/Lingyan000/fluxdo/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon-Light-1024x1024.png",
     );
+    expect(getProxyIconTarget("/proxy/icon/loveiwara")?.toString()).toBe(
+      "https://raw.githubusercontent.com/FoxSensei001/LoveIwara/master/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024%401x.png",
+    );
     expect(getProxyIconTarget("/proxy/icon/oliver")?.toString()).toBe(
       "https://github.com/Ovler-Young.png",
     );
@@ -104,6 +107,13 @@ describe("release proxy", () => {
       )?.toString(),
     ).toBe(
       "https://github.com/ccbkv/PicaComic/releases/download/4.8.8/PicaComic-4.8.8-new-app-ios-build_no_sign.ipa",
+    );
+    expect(
+      getProxyTarget(
+        "/proxy/FoxSensei001/LoveIwara/releases/download/0.5.1/i_iwara-0.5.1-ios.ipa",
+      )?.toString(),
+    ).toBe(
+      "https://github.com/FoxSensei001/LoveIwara/releases/download/0.5.1/i_iwara-0.5.1-ios.ipa",
     );
     expect(
       getProxyTarget("/proxy/example/other/releases/download/v1.0.0/app.ipa"),
