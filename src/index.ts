@@ -39,6 +39,8 @@ const JOYCOMIC_ICON = "https://raw.githubusercontent.com/xiaoqi419/JoyComic/main
 const MELOX_ICON =
   "https://raw.githubusercontent.com/youshen2/MeloX/main/MeloX/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png";
 const OLIVER_ICON = "https://github.com/Ovler-Young.png";
+const PICACOMIC_ICON =
+  "https://raw.githubusercontent.com/ccbkv/PicaComic/4.8.8/ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon~ios-marketing.png";
 const QYSG_ICON = "https://github.com/autobcb.png";
 const ZHIHU_ICON = "https://github.com/kangyun1994.png";
 
@@ -48,6 +50,7 @@ const ICONS: IconConfig[] = [
   { key: "joycomic", url: JOYCOMIC_ICON },
   { key: "melox", url: MELOX_ICON },
   { key: "oliver", url: OLIVER_ICON },
+  { key: "picacomic", url: PICACOMIC_ICON },
   { key: "qysg", url: QYSG_ICON },
   { key: "zhihu-plus-plus-swift", url: ZHIHU_ICON },
 ];
@@ -106,6 +109,19 @@ const APPS: AppConfig[] = [
     category: "music",
     repo: "youshen2/MeloX",
     minOSVersion: "26.0",
+  },
+  {
+    name: "Pica Comic",
+    bundleIdentifier: "com.github.pacalini.picaComic",
+    developerName: "ccbkv",
+    iconKey: "picacomic",
+    subtitle: "A comic app built with Flutter",
+    localizedDescription: "A comic app built with Flutter, supporting multiple comic sources.",
+    iconURL: PICACOMIC_ICON,
+    tintColor: "#F33686",
+    category: "books",
+    repo: "ccbkv/PicaComic",
+    minOSVersion: "12.0",
   },
   {
     name: "轻悦时光",

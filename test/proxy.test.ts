@@ -36,6 +36,9 @@ describe("release proxy", () => {
     expect(getProxyIconTarget("/proxy/icon/melox")?.toString()).toBe(
       "https://raw.githubusercontent.com/youshen2/MeloX/main/MeloX/Assets.xcassets/AppIcon.appiconset/AppIcon-1024.png",
     );
+    expect(getProxyIconTarget("/proxy/icon/picacomic")?.toString()).toBe(
+      "https://raw.githubusercontent.com/ccbkv/PicaComic/4.8.8/ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon~ios-marketing.png",
+    );
     expect(getProxyIconTarget("/proxy/icon/unknown")).toBeUndefined();
   });
 
@@ -94,6 +97,13 @@ describe("release proxy", () => {
       )?.toString(),
     ).toBe(
       "https://github.com/youshen2/MeloX/releases/download/v0.4.0/MeloX-iOS-unsigned.ipa.sha256",
+    );
+    expect(
+      getProxyTarget(
+        "/proxy/ccbkv/PicaComic/releases/download/4.8.8/PicaComic-4.8.8-new-app-ios-build_no_sign.ipa",
+      )?.toString(),
+    ).toBe(
+      "https://github.com/ccbkv/PicaComic/releases/download/4.8.8/PicaComic-4.8.8-new-app-ios-build_no_sign.ipa",
     );
     expect(
       getProxyTarget("/proxy/example/other/releases/download/v1.0.0/app.ipa"),
