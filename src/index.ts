@@ -232,7 +232,7 @@ const APPS: AppConfig[] = [
     iconURL: ZHIHU_ICON,
     tintColor: "#3D79B6",
     category: "social",
-    repo: "kangyun1994/zhihu-plus-plus-swift",
+    repo: "Amadeus1P048596/zhihu-plus-plus-swift",
     minOSVersion: "16.0",
   },
 ];

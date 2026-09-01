@@ -190,10 +190,10 @@ describe("release proxy", () => {
     ).toBeUndefined();
     expect(
       getProxyTarget(
-        "/proxy/kangyun1994/zhihu-plus-plus-swift/releases/download/v0.1.0/ZhihuPlusPlus-0.1.0-unsigned-final.ipa",
+        "/proxy/Amadeus1P048596/zhihu-plus-plus-swift/releases/download/v0.1.0/ZhihuPlusPlus-0.1.0-unsigned-final.ipa",
       )?.toString(),
     ).toBe(
-      "https://github.com/kangyun1994/zhihu-plus-plus-swift/releases/download/v0.1.0/ZhihuPlusPlus-0.1.0-unsigned-final.ipa",
+      "https://github.com/Amadeus1P048596/zhihu-plus-plus-swift/releases/download/v0.1.0/ZhihuPlusPlus-0.1.0-unsigned-final.ipa",
     );
   });
 });
