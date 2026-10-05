@@ -13,6 +13,7 @@ Included sources:
 - [youshen2/MeloX](https://github.com/youshen2/MeloX)
 - [celia-sh/Novella](https://github.com/celia-sh/Novella)
 - [Predidit/oneAnime](https://github.com/Predidit/oneAnime)
+- [ovlerfork/paseo](https://github.com/ovlerfork/paseo)
 - [ccbkv/PicaComic](https://github.com/ccbkv/PicaComic)
 - [autobcb/qysg](https://github.com/autobcb/qysg)
 - [kangyun1994/zhihu-plus-plus-swift](https://github.com/kangyun1994/zhihu-plus-plus-swift)

@@ -54,7 +54,7 @@ describe("source endpoint", () => {
     };
 
     expect(response.status).toBe(200);
-    expect(source.apps).toHaveLength(11);
+    expect(source.apps).toHaveLength(12);
     expect(source.apps.map((app) => app.bundleIdentifier)).not.toContain("tv.bangumi.czy0729");
     expect(source.featuredApps).toEqual(source.apps.map((app) => app.bundleIdentifier));
   });
@@ -76,7 +76,7 @@ describe("source endpoint", () => {
 
     expect(response.status).toBe(200);
     expect(await response.text()).not.toContain("test-token");
-    expect(fetch).toHaveBeenCalledTimes(12);
+    expect(fetch).toHaveBeenCalledTimes(13);
     for (const [, init] of fetch.mock.calls) {
       expect(new Headers(init?.headers).get("Authorization")).toBe("Bearer test-token");
     }

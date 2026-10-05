@@ -52,6 +52,8 @@ const NOVELLA_ICON =
 const OLIVER_ICON = "https://github.com/Ovler-Young.png";
 const ONEANIME_ICON =
   "https://raw.githubusercontent.com/Predidit/oneAnime/main/ios/Runner/Assets.xcassets/AppIcon.appiconset/Icon-App-1024x1024%401x.png";
+const PASEO_ICON =
+  "https://raw.githubusercontent.com/ovlerfork/paseo/v0.10.3-source-3e8cc098c-prerelease/packages/app/assets/images/icon.png";
 const PICACOMIC_ICON =
   "https://raw.githubusercontent.com/ccbkv/PicaComic/4.8.8/ios/Runner/Assets.xcassets/AppIcon.appiconset/AppIcon~ios-marketing.png";
 const QYSG_ICON = "https://github.com/autobcb.png";
@@ -68,6 +70,7 @@ const ICONS: IconConfig[] = [
   { key: "novella", url: NOVELLA_ICON },
   { key: "oliver", url: OLIVER_ICON },
   { key: "oneanime", url: ONEANIME_ICON },
+  { key: "paseo", url: PASEO_ICON },
   { key: "picacomic", url: PICACOMIC_ICON },
   { key: "qysg", url: QYSG_ICON },
   { key: "zhihu-plus-plus-swift", url: ZHIHU_ICON },
@@ -194,6 +197,20 @@ const APPS: AppConfig[] = [
     category: "entertainment",
     repo: "Predidit/oneAnime",
     minOSVersion: "12.0",
+  },
+  {
+    name: "Paseo",
+    bundleIdentifier: "sh.paseo",
+    developerName: "ovlerfork",
+    iconKey: "paseo",
+    subtitle: "Mobile controller for remote AI coding agents",
+    localizedDescription:
+      "Control remote AI coding agents from your phone with Paseo. Connect to your development machine to manage coding sessions and review agent activity on the go.",
+    iconURL: PASEO_ICON,
+    tintColor: "#000000",
+    category: "utilities",
+    repo: "ovlerfork/paseo",
+    minOSVersion: "15.1",
   },
   {
     name: "Pica Comic",
